@@ -19,7 +19,7 @@ public class SessionFilter implements Filter {
     String NO_LOGIN = "您还未登录";
 
     // 不需要登录就可以访问的路径(比如:注册登录等)
-    String[] includeUrls = new String[] {"/login", "register"};
+    String[] includeUrls = new String[] {"/login", "/register"};
 
 
     @Override
@@ -40,7 +40,7 @@ public class SessionFilter implements Filter {
         } else { // 需要过滤器
             // session中包含user对象,则是登录状态
             if (session != null && session.getAttribute("user") != null) {
-                // System.out.println("user:"+session.getAttribute("user"));
+                System.out.println("user:" + session.getAttribute("user"));
                 filterChain.doFilter(request, response);
             } else {
                 String requestType = request.getHeader("X-Requested-With");
@@ -58,8 +58,8 @@ public class SessionFilter implements Filter {
 
     /**
      * @Author: xxxxx
-     * @Description: 是否需要过滤
-     * @Date: 2018-03-12 13:20:54
+     * @Description: 判断是否需要过滤
+     * @Date:
      * @param uri
      */
     public boolean isNeedFilter(String uri) {

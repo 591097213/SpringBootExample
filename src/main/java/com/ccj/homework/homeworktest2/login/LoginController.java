@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public String login(String name, String pwd, HttpServletRequest request) {
         HttpSession session = request.getSession();
 
