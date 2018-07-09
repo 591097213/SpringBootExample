@@ -7,16 +7,18 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 
-// @WebFilter
+@WebFilter
 public class SessionFilter implements Filter {
 
 
-    String[] includeUrls = new String[] {"/login", "swagger-ui.html"};
+    String[] includeUrls =
+            new String[] {"/login", "/swagger-ui.html", "/swagger-resources", "/v2/api-docs"};
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
@@ -32,10 +34,12 @@ public class SessionFilter implements Filter {
 
 
         if (!needFilter) { // 不需要过滤直接传给下一个过滤器
+            System.out.println("111111111111111111111111111111111111111111111111111111111");
             filterChain.doFilter(servletRequest, servletResponse);
         } else { // 需要过滤器
             // session中包含user对象,则是登录状态
             if (session != null && session.getAttribute("user") != null) {
+                System.out.println("222222222222222222222222222222222222222222222222222222222");
                 filterChain.doFilter(request, response);
             }
             // else {
@@ -45,6 +49,7 @@ public class SessionFilter implements Filter {
             // response.getWriter().write(this.NO_LOGIN);
             // }
             else {
+                System.out.println("3333333333333333333333333333333333333333333333333333");
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
             }
             return;
