@@ -42,25 +42,26 @@ public class SessionFilter implements Filter {
             if (session != null && session.getAttribute("user") != null) {
                 System.out.println("user:" + session.getAttribute("user"));
                 filterChain.doFilter(request, response);
-            } else {
-                String requestType = request.getHeader("X-Requested-With");
-                // 判断是否是ajax请求
-                if (requestType != null && "XMLHttpRequest".equals(requestType)) {
-                    response.getWriter().write(this.NO_LOGIN);
-                } else {
-                    // 重定向到登录页(需要在static文件夹下建立此html文件)
-                    response.sendRedirect(request.getContextPath() + "/user/login.html");
-                }
-                return;
             }
+            // else {
+            // String requestType = request.getHeader("X-Requested-With");
+            // // 判断是否是ajax请求
+            // if (requestType != null && "XMLHttpRequest".equals(requestType)) {
+            // response.getWriter().write(this.NO_LOGIN);
+            // }
+            else {
+                // 重定向到登录页
+                response.sendRedirect(request.getContextPath() + "/login");
+            }
+            return;
         }
     }
 
+
     /**
-     * @Author: xxxxx
-     * @Description: 判断是否需要过滤
-     * @Date:
-     * @param uri
+     *
+     * 判断是否需要过滤
+     *
      */
     public boolean isNeedFilter(String uri) {
 
