@@ -7,20 +7,16 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.http.HttpStatus;
 
-@WebFilter
+// @WebFilter
 public class SessionFilter implements Filter {
 
-    // 标示符：表示当前用户未登录(可根据自己项目需要改为json样式)
-    String NO_LOGIN = "您还未登录";
 
-    // 不需要登录就可以访问的路径(比如:注册登录等)
-    String[] includeUrls = new String[] {"/login", "/register"};
-
+    String[] includeUrls = new String[] {"/login", "swagger-ui.html"};
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
@@ -30,7 +26,7 @@ public class SessionFilter implements Filter {
         HttpSession session = request.getSession(false);
         String uri = request.getRequestURI();
 
-        System.out.println("filter url:" + uri);
+        // System.out.println("filter url:" + uri);
         // 是否需要过滤
         boolean needFilter = isNeedFilter(uri);
 
@@ -40,7 +36,6 @@ public class SessionFilter implements Filter {
         } else { // 需要过滤器
             // session中包含user对象,则是登录状态
             if (session != null && session.getAttribute("user") != null) {
-                System.out.println("user:" + session.getAttribute("user"));
                 filterChain.doFilter(request, response);
             }
             // else {
@@ -50,13 +45,11 @@ public class SessionFilter implements Filter {
             // response.getWriter().write(this.NO_LOGIN);
             // }
             else {
-                // 重定向到登录页
-                response.sendRedirect(request.getContextPath() + "/login");
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
             }
             return;
         }
     }
-
 
     /**
      *

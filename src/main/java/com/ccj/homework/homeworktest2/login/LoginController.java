@@ -1,72 +1,44 @@
 package com.ccj.homework.homeworktest2.login;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.print.attribute.standard.PrinterLocation;
+import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
-@Controller
+@Api("登录系统")
 @RestController
 public class LoginController {
 
-    @GetMapping("/login")
-    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-
-        response.setContentType("text/html");
-
-        PrintWriter writer = response.getWriter();
-
-        writer.println("<html>");
-        writer.println("<head>");
-        writer.println("<title>用户登录</title>");
-        writer.println("</head>");
-        writer.println("<body><h1>用户登录</h1>");
-        writer.println("<form method='post'>");
-        writer.println("<table>");
-        writer.println("<tr>");
-        writer.println("<td>Name:</td>");
-        writer.println("<td><input name='name'/></td>");
-        writer.println("</tr>");
-        writer.println("<tr>");
-        writer.println("<td>PWD:</td>");
-        writer.println("<td><input name='pwd'/></td>");
-        writer.println("</tr>");
-        writer.println("<tr>");
-        writer.println("<td>&nbsp;</td>");
-        writer.println("<td><input type='reset'/>" + "<input type='submit'/></td>");
-        writer.println("</tr>");
-        writer.println("</table>");
-        writer.println("</form>");
-        writer.println("</body>");
-        writer.println("</html>");
-
-    }
-
+    @ApiOperation(value = "登录", notes = "提供登录的接口")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "name", value = "登录用户名", dataType = "String",
+                    paramType = "query", required = true, allowMultiple = false),
+            @ApiImplicitParam(name = "pwd", value = "登录密码", dataType = "String",
+                    paramType = "query", required = true, allowMultiple = false)})
     @PostMapping("/login")
-    public String verification(HttpServletRequest request, HttpServletResponse response) {
+    public void verification(@RequestParam("name") String name, @RequestParam("pwd") String pwd,
+            HttpServletRequest request, HttpServletResponse response) throws LoginException {
 
         HttpSession session = request.getSession();
-
-        String name = request.getParameter("name");
-        String pwd = request.getParameter("pwd");
 
         if (name.equals("root") && pwd.equals("root")) {
             User user = new User();
             user.setName(name);
             session.setAttribute("user", user);
-            return "登录成功!";
+            // return "登录成功!";
         } else {
-            return "用户名或密码错误!";
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            throw new LoginException("用户名或密码错误");
 
         }
     }
 }
-
