@@ -25,16 +25,16 @@ public class LoginController {
             @ApiImplicitParam(name = "pwd", value = "登录密码", dataType = "String",
                     paramType = "query", required = true, allowMultiple = false)})
     @PostMapping("/login")
-    public void verification(@RequestParam("name") String name, @RequestParam("pwd") String pwd,
+    public String verification(@RequestParam("name") String name, @RequestParam("pwd") String pwd,
             HttpServletRequest request, HttpServletResponse response) throws LoginException {
 
-        HttpSession session = request.getSession();
+        // HttpSession session = request.getSession();
 
         if (name.equals("root") && pwd.equals("root")) {
-            User user = new User();
-            user.setName(name);
-            session.setAttribute("user", user);
-            // return "登录成功!";
+            // User user = new User();
+            // user.setName(name);
+            // session.setAttribute("user", user);
+            return "123456";
         } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             throw new LoginException("用户名或密码错误");

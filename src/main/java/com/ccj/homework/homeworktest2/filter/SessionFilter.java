@@ -10,7 +10,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 
 @WebFilter
@@ -25,7 +24,8 @@ public class SessionFilter implements Filter {
             FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        HttpSession session = request.getSession(false);
+        // HttpSession session = request.getSession(false);
+        String tocken = request.getParameter("tocken");
         String uri = request.getRequestURI();
 
         // System.out.println("filter url:" + uri);
@@ -34,12 +34,12 @@ public class SessionFilter implements Filter {
 
 
         if (!needFilter) { // 不需要过滤直接传给下一个过滤器
-            System.out.println("111111111111111111111111111111111111111111111111111111111");
+            // System.out.println("111111111111111111111111111111111111111111111111111111111");
             filterChain.doFilter(servletRequest, servletResponse);
         } else { // 需要过滤器
             // session中包含user对象,则是登录状态
-            if (session != null && session.getAttribute("user") != null) {
-                System.out.println("222222222222222222222222222222222222222222222222222222222");
+            if (tocken.equals("123456")) {
+                // System.out.println("222222222222222222222222222222222222222222222222222222222");
                 filterChain.doFilter(request, response);
             }
             // else {
@@ -49,7 +49,7 @@ public class SessionFilter implements Filter {
             // response.getWriter().write(this.NO_LOGIN);
             // }
             else {
-                System.out.println("3333333333333333333333333333333333333333333333333333");
+                // System.out.println("3333333333333333333333333333333333333333333333333333");
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
             }
             return;
