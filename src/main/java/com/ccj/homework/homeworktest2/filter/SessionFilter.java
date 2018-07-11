@@ -1,6 +1,7 @@
 package com.ccj.homework.homeworktest2.filter;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -10,14 +11,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @WebFilter
 public class SessionFilter implements Filter {
 
-
-    String[] includeUrls =
-            new String[] {"/login", "/swagger-ui.html", "/swagger-resources", "/v2/api-docs"};
+    @Autowired
+    AccessibleUrls accessibleUrls;
+    // String[] includeUrls =
+    // new String[] {"/login", "/swagger-ui.html", "/swagger-resources", "/v2/api-docs"};
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
@@ -38,7 +41,7 @@ public class SessionFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else { // 需要过滤器
             // session中包含user对象,则是登录状态
-            if (tocken.equals("123456")) {
+            if (tocken != null && tocken.equals("123456")) {
                 // System.out.println("222222222222222222222222222222222222222222222222222222222");
                 filterChain.doFilter(request, response);
             }
@@ -62,10 +65,21 @@ public class SessionFilter implements Filter {
      *
      */
     public boolean isNeedFilter(String uri) {
+        // System.out.println("*****************************************" + uri);
+        List<String> urls = accessibleUrls.getUrls();
+        // System.out.println(urls.size());
+        // for (int i = 0; i < urls.size(); i++) {
+        // System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        // System.out.println(urls.get(i));
+        // }
 
-        for (String includeUrl : includeUrls) {
-            if (includeUrl.equals(uri)) {
+        for (int i = 0; i < urls.size(); i++) {
+            if (urls.get(i).equals(uri)) {
                 return false;
+            } else {
+                if (uri.substring(0, 6).equals("/phone")) {
+                    return false;
+                }
             }
         }
 
