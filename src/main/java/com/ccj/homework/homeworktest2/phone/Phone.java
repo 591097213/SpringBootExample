@@ -1,6 +1,7 @@
 package com.ccj.homework.homeworktest2.phone;
 
 import javax.servlet.http.HttpServletResponse;
+import com.ccj.homework.homeworktest2.data.IdentifyingCodeData;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ public class Phone {
 
 
     /**
-     * 接收验证码
+     * 接收并校验验证码
      */
     @ApiOperation(//
             value = "收验证码", //
@@ -33,7 +34,7 @@ public class Phone {
                     required = true, //
                     allowMultiple = false), //
             @ApiImplicitParam(//
-                    name = "tocken", //
+                    name = "identifyingCode", //
                     value = "验证码", //
                     dataType = "String", //
                     paramType = "query", //
@@ -41,9 +42,12 @@ public class Phone {
                     allowMultiple = false//
             )})
     @PostMapping("/phone")
-    public void receive(@RequestParam("phoneNumber") String phoneNumber,
-            @RequestParam("tocken") String tocken, HttpServletResponse response) throws Exception {
-        if (phoneNumber.equals(tocken)) {
+    public void receive(//
+            @RequestParam("phoneNumber") String phoneNumber, //
+            @RequestParam("identifyingCode") String identifyingCode, //
+            HttpServletResponse response//
+    ) throws Exception {
+        if (IdentifyingCodeData.getIdentifyingCodeByNum(phoneNumber).equals(identifyingCode)) {
             // TO DO
         } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -69,6 +73,19 @@ public class Phone {
     )
     @GetMapping(value = "/phone/{phoneNumber}")
     public String send(@PathVariable("phoneNumber") String phoneNumber) {
-        return phoneNumber;
+
+        // 生成验证码
+        int code = (int) (Math.random() * 10000);
+        // 补充前导0
+        String result = String.format("%04d", code);
+
+        // 储存验证码
+        IdentifyingCodeData.setIdentifyingCode(phoneNumber, result);
+
+        // 设定输出格式
+        String rawFormat = "{\"identifyingcode\":\"%s\"}";
+        String format = String.format(rawFormat, result);
+
+        return format;
     }
 }
