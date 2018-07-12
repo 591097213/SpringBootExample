@@ -4,3 +4,6 @@ safety:
         - "/swagger-ui.html"
         - "/swagger-resources"
         - "/v2/api-docs"
+        - "/webjars/springfox-swagger-ui/css/screen.css"
+        - "/webjars/springfox-swagger-ui/css/reset.css"
+        - "/webjars/springfox-swagger-ui/css/typography.css"

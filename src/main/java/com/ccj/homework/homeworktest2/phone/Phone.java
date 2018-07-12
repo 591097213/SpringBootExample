@@ -17,26 +17,56 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class Phone {
 
-    @ApiOperation(value = "收验证码", notes = "接收并验证手机验证码")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "phoneNumber", value = "手机号", dataType = "String",
-                    paramType = "query", required = true, allowMultiple = false),
-            @ApiImplicitParam(name = "tocken", value = "验证码", dataType = "String",
-                    paramType = "query", required = true, allowMultiple = false)})
+
+    /**
+     * 接收验证码
+     */
+    @ApiOperation(//
+            value = "收验证码", //
+            notes = "接收并验证手机验证码"//
+    )
+    @ApiImplicitParams({//
+            @ApiImplicitParam(name = "phoneNumber", //
+                    value = "手机号", //
+                    dataType = "String", //
+                    paramType = "query", //
+                    required = true, //
+                    allowMultiple = false), //
+            @ApiImplicitParam(//
+                    name = "tocken", //
+                    value = "验证码", //
+                    dataType = "String", //
+                    paramType = "query", //
+                    required = true, //
+                    allowMultiple = false//
+            )})
     @PostMapping("/phone")
     public void receive(@RequestParam("phoneNumber") String phoneNumber,
             @RequestParam("tocken") String tocken, HttpServletResponse response) throws Exception {
         if (phoneNumber.equals(tocken)) {
-
+            // TO DO
         } else {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             throw new Exception("验证失败");
         }
     }
 
-    @ApiOperation(value = "发验证码", notes = "发送手机验证码")
-    @ApiImplicitParam(name = "phoneNumber", value = "手机号", dataType = "String", paramType = "path",
-            required = true, allowMultiple = false)
+
+    /**
+     * 发送验证码
+     */
+    @ApiOperation(//
+            value = "发验证码", //
+            notes = "发送手机验证码"//
+    )
+    @ApiImplicitParam(//
+            name = "phoneNumber", //
+            value = "手机号", //
+            dataType = "String", //
+            paramType = "path", //
+            required = true, //
+            allowMultiple = false//
+    )
     @GetMapping(value = "/phone/{phoneNumber}")
     public String send(@PathVariable("phoneNumber") String phoneNumber) {
         return phoneNumber;

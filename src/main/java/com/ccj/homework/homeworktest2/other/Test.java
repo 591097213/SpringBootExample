@@ -1,12 +1,13 @@
-package com.ccj.homework.homeworktest2.login;
+package com.ccj.homework.homeworktest2.other;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
+@Api("测试")
 @RestController
 public class Test {
 

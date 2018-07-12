@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * 获取配置文件中定义的可访问目录
+ */
 @Component
 @ConfigurationProperties(prefix = "safety")
 public class AccessibleUrls {
