@@ -1,13 +1,10 @@
 package com.ccj.homework.homeworktest2.handlerinterceptoradapter;
 
-import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.ccj.homework.homeworktest2.dao.data.SmsCodeAndPhoNumData;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
@@ -28,7 +25,8 @@ public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
     // }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+            Object object) throws Exception {
 
         String phoNum = request.getParameter("phoNum");
         String smsCode = request.getParameter("smsCode");

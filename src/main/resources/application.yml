@@ -10,5 +10,10 @@ safety:
 login:
     accountAndPwd:
         #account:pwd
+        #token中以':'分隔用户名和时间戳，故这里用户名中不能出现':'
         root: root
-        Admin: 123456
+        admin: 123456
+    phoNumAndAccount:
+        #phoNum:Pwd
+        "18350193122": root
+        "12345678910": admin

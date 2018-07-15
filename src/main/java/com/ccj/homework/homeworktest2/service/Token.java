@@ -1,6 +1,5 @@
 package com.ccj.homework.homeworktest2.service;
 
-import java.util.UUID;
 import com.ccj.homework.homeworktest2.dao.data.TokenData;
 
 /**
@@ -15,7 +14,9 @@ public class Token {
 
         // 生成tocken
         StringBuffer bftocken = new StringBuffer(name);
-        bftocken.append(UUID.randomUUID().toString().replace("-", ""));
+        // 以冒号分隔用户名和时间戳
+        bftocken.append(":");
+        bftocken.append(System.currentTimeMillis());
         String tocken = bftocken.toString();
 
         // 记录tocken

@@ -18,11 +18,10 @@ public class GenerateCode {
         ImgCodeAndPhoNumData.setIdentifyingCode(phoneNumber, result);
 
         // 设定输出格式
-        String rawFormat = "{\"identifyingcode\":\"%s\"}";
+        String rawFormat = "{\"imgcode\":\"%s\"}";
         String format = String.format(rawFormat, result);
         return format;
     }
-
 
     /**
      * 生成并存储短信验证码
@@ -37,7 +36,7 @@ public class GenerateCode {
         SmsCodeAndPhoNumData.setPhoNumAndSmsCode(phoneNumber, result);
 
         // 设定输出格式
-        String rawFormat = "{\"identifyingcode\":\"%s\"}";
+        String rawFormat = "{\"smscode\":\"%s\"}";
         String format = String.format(rawFormat, result);
         return format;
     }

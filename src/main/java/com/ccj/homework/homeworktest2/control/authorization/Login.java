@@ -2,7 +2,7 @@ package com.ccj.homework.homeworktest2.control.authorization;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletResponse;
-import com.ccj.homework.homeworktest2.other.staticdata.AccountAndPwd;
+import com.ccj.homework.homeworktest2.other.staticdata.AccountData;
 import com.ccj.homework.homeworktest2.service.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class Login {
 
         // 读取账户和密码
         @Autowired
-        AccountAndPwd accountAndPwd;
+        AccountData accountData;
 
         /**
          * 账号密码登录
@@ -47,14 +47,14 @@ public class Login {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        ) })
+                        )})
         @PostMapping("/account-and-pwd")
         public String loginByAccountAndPwd(//
                         @RequestParam("account") String account, //
                         @RequestParam("pwd") String pwd, //
                         HttpServletResponse response) throws LoginException {
 
-                if (pwd.equals(accountAndPwd.getPwdByAccount(account))) {
+                if (pwd.equals(accountData.getPwdByAccount(account))) {
 
                         Token tocken = new Token();
                         return tocken.generateAndSave(account);
@@ -87,17 +87,15 @@ public class Login {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        ) })
+                        )})
         @PostMapping("phone-num")
         public String loginByPhoneNum(//
                         @RequestParam("phoNum") String phoNum//
         ) throws LoginException {
 
-                // TO DO
-                // 判断手机号是否合法，不合法则抛出LoginException
-
+                String account = accountData.getAccountByPhoNum(phoNum);
                 Token token = new Token();
-                return token.generateAndSave(phoNum);
+                return token.generateAndSave(account);
 
         }
 

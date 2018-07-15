@@ -65,17 +65,18 @@ public class Code {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        ) })
+                        )})
         @PostMapping("/sms")
-        public String sendSmsCode(//
+        public boolean sendSmsCode(//
                         @RequestParam("phoNum") String phoNum, //
                         HttpServletResponse response//
         ) {
 
                 GenerateCode generateCode = new GenerateCode();
                 String format = generateCode.generateAndSaveSmsCode(phoNum);
+                System.out.println(format);
 
-                return format;
+                return true;
         }
 
 }

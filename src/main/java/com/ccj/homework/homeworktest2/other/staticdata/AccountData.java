@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ConfigurationProperties(prefix = "login")
-public class AccountAndPwd {
+public class AccountData {
 
     Map<String, String> accountAndPwd = new HashMap<String, String>();
+    Map<String, String> phoNumAndAccount = new HashMap<String, String>();
+
 
     /**
      * @param accountAndPwd the accountAndPwd to set
@@ -26,6 +28,27 @@ public class AccountAndPwd {
      */
     public Map<String, String> getAccountAndPwd() {
         return accountAndPwd;
+    }
+
+    /**
+     * @return the phoNumAndPwd
+     */
+    public Map<String, String> getPhoNumAndAccount() {
+        return phoNumAndAccount;
+    }
+
+    /**
+     * @param phoNumAndAccount the phoNumAndPwd to set
+     */
+    public void setPhoNumAndPwd(Map<String, String> phoNumAndAccount) {
+        this.phoNumAndAccount = phoNumAndAccount;
+    }
+
+    /**
+     * 根据手机号获取用户名
+     */
+    public String getAccountByPhoNum(String phoNum) {
+        return phoNumAndAccount.get(phoNum);
     }
 
     /**
