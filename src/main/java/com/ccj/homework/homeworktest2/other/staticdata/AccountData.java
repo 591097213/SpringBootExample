@@ -12,8 +12,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "login")
 public class AccountData {
 
-    Map<String, String> accountAndPwd = new HashMap<String, String>();
-    Map<String, String> phoNumAndAccount = new HashMap<String, String>();
+    private Map<String, String> accountAndPwd = new HashMap<String, String>();
+    private Map<String, String> phoNumAndAccount = new HashMap<String, String>();
+    private Map<String, String> accountAndPhoNum = new HashMap<String, String>();
 
 
     /**
@@ -45,6 +46,20 @@ public class AccountData {
     }
 
     /**
+     * @return the accountAndPhoNum
+     */
+    public Map<String, String> getAccountAndPhoNum() {
+        return accountAndPhoNum;
+    }
+
+    /**
+     * @param accountAndPhoNum the accountAndPhoNum to set
+     */
+    public void setAccountAndPhoNum(Map<String, String> accountAndPhoNum) {
+        this.accountAndPhoNum = accountAndPhoNum;
+    }
+
+    /**
      * 根据手机号获取用户名
      */
     public String getAccountByPhoNum(String phoNum) {
@@ -56,5 +71,21 @@ public class AccountData {
      */
     public String getPwdByAccount(String account) {
         return accountAndPwd.get(account);
+    }
+
+
+    /**
+     * 修改密码
+     */
+    public boolean resetPwdByAccount(String account, String pwd) {
+        accountAndPwd.put(account, pwd);
+        return true;
+    }
+
+    /**
+     * 根据用户名获取手机号
+     */
+    public String getPhoNumByAccount(String account) {
+        return this.accountAndPhoNum.get(account);
     }
 }

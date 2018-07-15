@@ -26,6 +26,24 @@ public class DemoApplicationTests {
         System.out.println("************************************");
         System.out.println(accountData.getAccountByPhoNum("18350193122"));
         System.out.println(accountData.getAccountByPhoNum("12345678910"));
+
+        System.out.println("************************************");
+        System.out.println(accountData.getPhoNumByAccount("root"));
+    }
+
+    @Test
+    public void spilt() {
+        String a[] = "a:b;c:d".split(":");
+        System.out.println(a[0]);
+        for (String b : a) {
+            System.out.println(b);
+        }
+    }
+
+    @Test
+    public void accountDataTest() {
+        System.out.println(accountData.getPhoNumByAccount("root"));
+        System.out.println(accountData.getPhoNumByAccount("admin"));
     }
 
 }

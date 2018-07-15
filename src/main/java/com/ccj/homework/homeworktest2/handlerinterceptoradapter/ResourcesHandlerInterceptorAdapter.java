@@ -2,30 +2,28 @@ package com.ccj.homework.homeworktest2.handlerinterceptoradapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.servlet.ModelAndView;
+import com.ccj.homework.homeworktest2.dao.data.TokenData;
+import com.ccj.homework.homeworktest2.service.Token;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class ResourcesHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object,
-            Exception exception) throws Exception {
-        // 在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）
-        System.out.println("3. 整个请求结束之后被调用......CustomInterceptor1......");
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object, ModelAndView view)
-            throws Exception {
-        // 请求处理之后进行调用，但是在视图被渲染之前
-        System.out.println("2. 请求处理之后进行调用，但是在视图被渲染之前......CustomInterceptor1......");
-    }
-
-    @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
-        // 在请求处理之前进行调用
-        System.out.println("1. 在请求处理之前进行调用......CustomInterceptor1......");
-        // 只有返回true才会继续向下执行，返回false取消当前请求
-        return true;
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+            Object object) throws Exception {
+        // System.out.println("***********************************************进入资源拦截器");
+        String token = request.getParameter("token");
+        System.out.println(token);
+        Token toolToken = new Token();
+        String account = toolToken.getAccountByToken(token);
+        // System.out.println("--------------------------------------------" + account);
+        request.setAttribute("account", account);
+        if (TokenData.findUserToken(token) == true) {
+            return true;
+        } else {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            return false;
+        }
     }
 }

@@ -4,41 +4,41 @@ import java.util.*;
 
 
 /**
- * 存储用户的Tocken
+ * 存储用户的Token
  */
 public class TokenData {
 
     /**
-     * 存放用户名与tocken
+     * 存放用户名与token
      */
-    private static List<String> userTocken = new ArrayList<String>();
+    private static List<String> userToken = new ArrayList<String>();
 
     /**
-     * 向类中添加Tocken
+     * 向类中添加Token
      */
-    public static String addUserTockenData(String userTockenData) {
-        userTocken.add(userTockenData);
-        return userTockenData;
+    public static String addUserTokenData(String userTokenData) {
+        userToken.add(userTokenData);
+        return userTokenData;
     }
 
     /**
-     * 查询Tocken
+     * 查询Token
      */
-    public static boolean findUserTocken(String userTockenData) {
-        return userTocken.contains(userTockenData);
+    public static boolean findUserToken(String userTokenData) {
+        return userToken.contains(userTokenData);
     }
 
     /**
-     * @return the userTocken
+     * @return the userToken
      */
-    public static List<String> getUserTocken() {
-        return userTocken;
+    public static List<String> getUserToken() {
+        return userToken;
     }
 
     /**
-     * @param userTocken the userTocken to set
+     * @param userToken the userToken to set
      */
-    public static void setUserTocken(List<String> userTocken) {
-        TokenData.userTocken = userTocken;
+    public static void setUserToken(List<String> userToken) {
+        TokenData.userToken = userToken;
     }
 }

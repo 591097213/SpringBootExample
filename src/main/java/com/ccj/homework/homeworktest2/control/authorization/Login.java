@@ -56,8 +56,8 @@ public class Login {
 
                 if (pwd.equals(accountData.getPwdByAccount(account))) {
 
-                        Token tocken = new Token();
-                        return tocken.generateAndSave(account);
+                        Token token = new Token();
+                        return token.generateAndSave(account);
                 } else {
 
                         // 登录失败

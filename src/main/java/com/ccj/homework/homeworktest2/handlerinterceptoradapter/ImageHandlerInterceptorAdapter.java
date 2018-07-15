@@ -1,35 +1,34 @@
 package com.ccj.homework.homeworktest2.handlerinterceptoradapter;
 
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.ccj.homework.homeworktest2.dao.data.ImgCodeAndPhoNumData;
-
+import com.ccj.homework.homeworktest2.other.staticdata.AccountData;
+import com.ccj.homework.homeworktest2.service.Token;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
 
 public class ImageHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
-    // @Override
-    // public void afterCompletion(HttpServletRequest request, HttpServletResponse
-    // response, Object object,
-    // Exception exception) throws Exception {
-    // // 在整个请求结束之后被调用，也就是在DispatcherServlet 渲染了对应的视图之后执行（主要是用于进行资源清理工作）
-    // System.out.println("3. 整个请求结束之后被调用......CustomInterceptor1......");
-    // }
-
-    // @Override
-    // public void postHandle(HttpServletRequest request, HttpServletResponse
-    // response, Object object, ModelAndView view)
-    // throws Exception {
-    // // 请求处理之后进行调用，但是在视图被渲染之前
-    // System.out.println("2. 请求处理之后进行调用，但是在视图被渲染之前......CustomInterceptor1......");
-    // }
+    @Autowired
+    public AccountData accountData;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+            Object object) throws Exception {
+
         String phoNum = request.getParameter("phoNum");
+        if (phoNum == null) {
+            System.out.println("进入if语句");
+            String token = request.getParameter("token");
+            Token toolToken = new Token();
+            String account = toolToken.getAccountByToken(token);
+            String temp = accountData.getPhoNumByAccount(account);
+            phoNum = temp;
+        }
         String imgCode = request.getParameter("imgCode");
 
         if (ImgCodeAndPhoNumData.getIdentifyingCodeByNum(phoNum).equals(imgCode)) {
@@ -39,4 +38,5 @@ public class ImageHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
             return false;
         }
     }
+
 }

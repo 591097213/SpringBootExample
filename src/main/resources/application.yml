@@ -17,3 +17,6 @@ login:
         #phoNum:Pwd
         "18350193122": root
         "12345678910": admin
+    accountAndPhoNum:
+        root: "18350193122"
+        admin: "12345678910"
