@@ -1,4 +1,4 @@
-package com.ccj.homework.homeworktest2.conf;
+package com.ccj.homework.homeworktest2.other.conf;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

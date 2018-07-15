@@ -1,8 +1,12 @@
-package com.ccj.homework.homeworktest2.data;
+package com.ccj.homework.homeworktest2.dao.data;
 
 import java.util.*;
 
-public class UserTockenData {
+
+/**
+ * 存储用户的Tocken
+ */
+public class TokenData {
 
     /**
      * 存放用户名与tocken
@@ -24,4 +28,17 @@ public class UserTockenData {
         return userTocken.contains(userTockenData);
     }
 
+    /**
+     * @return the userTocken
+     */
+    public static List<String> getUserTocken() {
+        return userTocken;
+    }
+
+    /**
+     * @param userTocken the userTocken to set
+     */
+    public static void setUserTocken(List<String> userTocken) {
+        TokenData.userTocken = userTocken;
+    }
 }

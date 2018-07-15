@@ -1,5 +1,5 @@
 safety:
-    urls:
+    ignoreUrls:
         - "/login"
         - "/swagger-ui.html"
         - "/swagger-resources"
@@ -7,3 +7,8 @@ safety:
         - "/webjars/springfox-swagger-ui/css/screen.css"
         - "/webjars/springfox-swagger-ui/css/reset.css"
         - "/webjars/springfox-swagger-ui/css/typography.css"
+login:
+    accountAndPwd:
+        #account:pwd
+        root: root
+        Admin: 123456

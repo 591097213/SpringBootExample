@@ -1,4 +1,4 @@
-package com.ccj.homework.homeworktest2.filter;
+package com.ccj.homework.homeworktest2.other.staticdata;
 
 import java.util.ArrayList;
 import java.util.List;
