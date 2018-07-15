@@ -1,4 +1,4 @@
-package com.ccj.homework.homeworktest2.control.authorization;
+package com.ccj.homework.homeworktest2.control.resources;
 
 import javax.servlet.http.HttpServletResponse;
 import com.ccj.homework.homeworktest2.service.GenerateCode;
@@ -11,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;;
-
 
 /**
  * 获取手机验证码模块，包括获取短信验证码和图片验证码
@@ -45,7 +44,6 @@ public class Code {
                 return format;
         }
 
-
         /**
          * 获取短信验证码
          */
@@ -53,33 +51,31 @@ public class Code {
                         value = "发送短信验证码", //
                         notes = "向指定手机发送短信验证码"//
         )
-        @ApiImplicitParams({//
-                        @ApiImplicitParam(name = "phoneNum", //
+        @ApiImplicitParams({ //
+                        @ApiImplicitParam(name = "phoNum", //
                                         value = "手机号", //
                                         dataType = "String", //
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false), //
                         @ApiImplicitParam(//
-                                        name = "imageCode", //
+                                        name = "imgCode", //
                                         value = "图片验证码", //
                                         dataType = "String", //
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        )})
+                        ) })
         @PostMapping("/sms")
         public String sendSmsCode(//
-                        @RequestParam("phoneNum") String phoneNum, //
+                        @RequestParam("phoNum") String phoNum, //
                         HttpServletResponse response//
         ) {
 
                 GenerateCode generateCode = new GenerateCode();
-                String format = generateCode.generateAndSaveSmsCode(phoneNum);
+                String format = generateCode.generateAndSaveSmsCode(phoNum);
 
                 return format;
         }
-
-
 
 }

@@ -12,6 +12,7 @@ public class Token {
      * 生成并存储Tocken然后返回该tocken
      */
     public String generateAndSave(String name) {
+
         // 生成tocken
         StringBuffer bftocken = new StringBuffer(name);
         bftocken.append(UUID.randomUUID().toString().replace("-", ""));
@@ -28,4 +29,3 @@ public class Token {
         return result;
     }
 }
-
