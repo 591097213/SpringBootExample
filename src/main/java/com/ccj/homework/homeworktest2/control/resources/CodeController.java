@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;;
 @Api("手机验证码")
 @RestController
 @RequestMapping("/code")
-public class Code {
+public class CodeController {
 
         /**
          * 获取图片验证码
@@ -66,7 +66,7 @@ public class Code {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        ) })
+                        )})
         @PostMapping("/sms")
         public boolean sendSmsCode(//
                         @RequestParam("phoNum") String phoNum, //

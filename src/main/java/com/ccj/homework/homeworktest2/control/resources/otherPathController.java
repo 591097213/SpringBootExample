@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api("资源路径模块")
 @RestController
-public class otherPath {
+public class otherPathController {
 
         @ApiOperation(//
                         value = "资源路径", //

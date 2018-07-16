@@ -20,8 +20,8 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api("登录接口")
 @RestController
-@RequestMapping("/login")
-public class Login {
+@RequestMapping("/authorization")
+public class LoginController {
 
         // 读取账户和密码
         @Autowired
@@ -47,8 +47,8 @@ public class Login {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        ) })
-        @PostMapping("/account-and-pwd")
+                        )})
+        @PostMapping("/accountAndPwd")
         public String loginByAccountAndPwd(//
                         @RequestParam("account") String account, //
                         @RequestParam("pwd") String pwd, //
@@ -88,8 +88,8 @@ public class Login {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        ) })
-        @PostMapping("phone-num")
+                        )})
+        @PostMapping("phoneNum")
         public String loginByPhoneNum(//
                         @RequestParam("phoNum") String phoNum//
         ) throws LoginException {

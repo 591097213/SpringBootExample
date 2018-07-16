@@ -1,4 +1,4 @@
-package com.ccj.homework.homeworktest2.other.conf;
+package com.ccj.homework.homeworktest2.other.conf.swaggerconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

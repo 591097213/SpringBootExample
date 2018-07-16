@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 @Api("密码管理模块")
 @RestController
 @RequestMapping("/pwd")
-public class Pwd {
+public class PwdController {
 
         @Autowired
         AccountData accountdata;
@@ -56,8 +56,8 @@ public class Pwd {
                         )//
         })
         @PostMapping("/alter")
-        public boolean resetPwd(@RequestParam("newPwd") String newPwd, @RequestParam("oldPwd") String oldPwd,
-                        HttpServletRequest request) {
+        public boolean resetPwd(@RequestParam("newPwd") String newPwd,
+                        @RequestParam("oldPwd") String oldPwd, HttpServletRequest request) {
                 // 从request中取出ResourcesHandlerInterceptorAdapter放入的用户名
                 String account = (String) request.getAttribute("account");
                 // 验证旧密码是否正确

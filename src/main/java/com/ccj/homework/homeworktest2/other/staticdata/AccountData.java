@@ -19,11 +19,6 @@ public class AccountData {
     // 存储用户名和手机号
     private Map<String, String> accountAndPhoNum = new HashMap<String, String>();
 
-    private Abc abc;
-
-    public static class Abc {
-        private String deg;
-    }
 
     /**
      * @param accountAndPwd the accountAndPwd to set
