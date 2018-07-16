@@ -1,7 +1,7 @@
 package com.ccj.homework.homeworktest2.control.resources;
 
 import javax.servlet.http.HttpServletResponse;
-import com.ccj.homework.homeworktest2.service.GenerateCode;
+import com.ccj.homework.homeworktest2.service.tool.GenerateCode;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

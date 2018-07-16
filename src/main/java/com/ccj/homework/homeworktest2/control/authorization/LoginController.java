@@ -3,7 +3,7 @@ package com.ccj.homework.homeworktest2.control.authorization;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletResponse;
 import com.ccj.homework.homeworktest2.other.staticdata.AccountData;
-import com.ccj.homework.homeworktest2.service.Token;
+import com.ccj.homework.homeworktest2.service.tool.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;

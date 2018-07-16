@@ -1,4 +1,4 @@
-package com.ccj.homework.homeworktest2.service;
+package com.ccj.homework.homeworktest2.service.tool;
 
 import com.ccj.homework.homeworktest2.dao.data.TokenData;
 
