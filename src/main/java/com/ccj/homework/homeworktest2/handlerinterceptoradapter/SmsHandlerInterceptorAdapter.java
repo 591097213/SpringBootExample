@@ -4,15 +4,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ccj.homework.homeworktest2.dao.data.SmsCodeAndPhoNumData;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+@Component
 public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
     /**
      * 短信验证码拦截器
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+            Object object) throws Exception {
 
         // 从请求中提取phoNum和smsCode参数
         String phoNum = request.getParameter("phoNum");

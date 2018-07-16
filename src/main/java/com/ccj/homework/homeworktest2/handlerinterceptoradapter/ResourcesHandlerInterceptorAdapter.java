@@ -5,11 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.ccj.homework.homeworktest2.dao.data.TokenData;
 import com.ccj.homework.homeworktest2.service.Token;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * 资源拦截器
  */
+@Component
 public class ResourcesHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
     @Override
