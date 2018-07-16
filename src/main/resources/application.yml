@@ -1,12 +1,3 @@
-safety:
-    ignoreUrls:
-        - "/login"
-        - "/swagger-ui.html"
-        - "/swagger-resources"
-        - "/v2/api-docs"
-        - "/webjars/springfox-swagger-ui/css/screen.css"
-        - "/webjars/springfox-swagger-ui/css/reset.css"
-        - "/webjars/springfox-swagger-ui/css/typography.css"
 login:
     accountAndPwd:
         #account:pwd

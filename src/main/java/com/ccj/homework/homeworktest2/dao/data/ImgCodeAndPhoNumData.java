@@ -25,12 +25,15 @@ public class ImgCodeAndPhoNumData {
     }
 
     /**
-     * 获取验证码
+     * 根据手机号获取图片验证码
      */
     public static String getIdentifyingCodeByNum(String num) {
         return imgCodeAndPhoNum.get(num);
     }
 
+    /**
+     * 存入手机号和相应的图片验证码
+     */
     public static void setIdentifyingCode(String num, String code) {
         imgCodeAndPhoNum.put(num, code);
     }

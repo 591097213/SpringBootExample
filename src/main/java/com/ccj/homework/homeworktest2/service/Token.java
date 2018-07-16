@@ -30,6 +30,9 @@ public class Token {
         return result;
     }
 
+    /**
+     * 在token中提取用户名
+     */
     public String getAccountByToken(String token) {
         String accountAndRawToken[] = token.split(":");
         String account = accountAndRawToken[0];

@@ -1,7 +1,5 @@
 package com.ccj.homework.homeworktest2.dao.data;
 
-
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,12 +25,15 @@ public class SmsCodeAndPhoNumData {
     }
 
     /**
-     * 获取验证码
+     * 根据手机号获取验证码
      */
     public static String getSmsCodeByPhoNum(String phoNum) {
         return smsCodeAndPhoNumData.get(phoNum);
     }
 
+    /**
+     * 存入手机号和短信验证码
+     */
     public static void setPhoNumAndSmsCode(String phoNum, String smsCode) {
         smsCodeAndPhoNumData.put(phoNum, smsCode);
     }

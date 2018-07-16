@@ -47,15 +47,16 @@ public class Login {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        )})
+                        ) })
         @PostMapping("/account-and-pwd")
         public String loginByAccountAndPwd(//
                         @RequestParam("account") String account, //
                         @RequestParam("pwd") String pwd, //
                         HttpServletResponse response) throws LoginException {
-
+                // 验证密码是否正确
                 if (pwd.equals(accountData.getPwdByAccount(account))) {
 
+                        // 生成并保存token
                         Token token = new Token();
                         return token.generateAndSave(account);
                 } else {
@@ -87,13 +88,15 @@ public class Login {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        )})
+                        ) })
         @PostMapping("phone-num")
         public String loginByPhoneNum(//
                         @RequestParam("phoNum") String phoNum//
         ) throws LoginException {
 
+                // 根据手机号获取用户名
                 String account = accountData.getAccountByPhoNum(phoNum);
+                // 根据用户名生成token
                 Token token = new Token();
                 return token.generateAndSave(account);
 

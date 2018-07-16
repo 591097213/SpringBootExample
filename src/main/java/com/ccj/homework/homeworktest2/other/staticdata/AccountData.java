@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "login")
 public class AccountData {
 
+    // 存储用户名和密码
     private Map<String, String> accountAndPwd = new HashMap<String, String>();
+    // 存储手机号和用户名
     private Map<String, String> phoNumAndAccount = new HashMap<String, String>();
+    // 存储用户名和手机号
     private Map<String, String> accountAndPhoNum = new HashMap<String, String>();
-
 
     /**
      * @param accountAndPwd the accountAndPwd to set
@@ -72,7 +74,6 @@ public class AccountData {
     public String getPwdByAccount(String account) {
         return accountAndPwd.get(account);
     }
-
 
     /**
      * 修改密码

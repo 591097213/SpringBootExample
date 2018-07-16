@@ -8,18 +8,22 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
-
+    /**
+     * 短信验证码拦截器
+     */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-            Object object) throws Exception {
-        // System.out.println("********************************进入短信验证码拦截器");
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
+
+        // 从请求中提取phoNum和smsCode参数
         String phoNum = request.getParameter("phoNum");
         String smsCode = request.getParameter("smsCode");
 
+        // 校验参数
         if (SmsCodeAndPhoNumData.getSmsCodeByPhoNum(phoNum).equals(smsCode)) {
             return true;
         } else {
 
+            // 校验失败
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             // throw new Exception("用户名或密码错误");
             return false;

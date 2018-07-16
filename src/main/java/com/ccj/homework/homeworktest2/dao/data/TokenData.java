@@ -2,14 +2,13 @@ package com.ccj.homework.homeworktest2.dao.data;
 
 import java.util.*;
 
-
 /**
  * 存储用户的Token
  */
 public class TokenData {
 
     /**
-     * 存放用户名与token
+     * 存放token
      */
     private static List<String> userToken = new ArrayList<String>();
 

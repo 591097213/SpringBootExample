@@ -38,6 +38,7 @@ public class Code {
         @GetMapping(value = "/image")
         public String sendImageCode(@RequestParam("phoneNumber") String phoneNum) {
 
+                // 生成图片验证码
                 GenerateCode generateCode = new GenerateCode();
                 String format = generateCode.generateAndSaveImageCode(phoneNum);
 
@@ -65,15 +66,17 @@ public class Code {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
-                        )})
+                        ) })
         @PostMapping("/sms")
         public boolean sendSmsCode(//
                         @RequestParam("phoNum") String phoNum, //
                         HttpServletResponse response//
         ) {
 
+                // 生成短信验证码
                 GenerateCode generateCode = new GenerateCode();
                 String format = generateCode.generateAndSaveSmsCode(phoNum);
+                // 输出短信验证码并返回true
                 System.out.println(format);
 
                 return true;

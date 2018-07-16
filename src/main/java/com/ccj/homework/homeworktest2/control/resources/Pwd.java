@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-
 @Api("密码管理模块")
 @RestController
 @RequestMapping("/pwd")
@@ -22,7 +21,7 @@ public class Pwd {
         AccountData accountdata;
 
         @ApiOperation(value = "修改密码", notes = "修改密码")
-        @ApiImplicitParams({//
+        @ApiImplicitParams({ //
                         @ApiImplicitParam(//
                                         name = "imgCode", //
                                         value = "图片验证码", //
@@ -57,12 +56,13 @@ public class Pwd {
                         )//
         })
         @PostMapping("/alter")
-        public boolean resetPwd(@RequestParam("newPwd") String newPwd,
-                        @RequestParam("oldPwd") String oldPwd, HttpServletRequest request) {
+        public boolean resetPwd(@RequestParam("newPwd") String newPwd, @RequestParam("oldPwd") String oldPwd,
+                        HttpServletRequest request) {
+                // 从request中取出ResourcesHandlerInterceptorAdapter放入的用户名
                 String account = (String) request.getAttribute("account");
-                // System.out.println("***************************************************" +
-                // account);
+                // 验证旧密码是否正确
                 if (accountdata.getPwdByAccount(account).equals(oldPwd)) {
+                        // 修改密码
                         return accountdata.resetPwdByAccount(account, newPwd);
                 } else {
                         return false;
