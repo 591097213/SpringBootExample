@@ -11,3 +11,7 @@ login:
     accountAndPhoNum:
         root: "18350193122"
         admin: "12345678910"
+authorization:
+    appidAndAppsecret:
+        app1: 123456
+        app2: 654321

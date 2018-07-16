@@ -1,6 +1,7 @@
 package com.ccj.homework.homeworktest2.control.authorization;
 
 import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ccj.homework.homeworktest2.other.staticdata.AccountData;
 import com.ccj.homework.homeworktest2.service.tool.Token;
@@ -47,18 +48,31 @@ public class LoginController {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
+                        ), //
+                        @ApiImplicitParam(//
+                                        name = "Authorization", //
+                                        value = "appid:appsecret", //
+                                        dataType = "String", //
+                                        paramType = "header", //
+                                        required = true, //
+                                        allowMultiple = false//
                         )})
         @PostMapping("/accountAndPwd")
         public String loginByAccountAndPwd(//
                         @RequestParam("account") String account, //
                         @RequestParam("pwd") String pwd, //
-                        HttpServletResponse response) throws LoginException {
+                        HttpServletRequest request, //
+                        HttpServletResponse response//
+        ) throws LoginException {
                 // 验证密码是否正确
                 if (pwd.equals(accountData.getPwdByAccount(account))) {
 
+                        // 提取appid
+                        String appid = (String) request.getAttribute("appid");
+
                         // 生成并保存token
                         Token token = new Token();
-                        return token.generateAndSave(account);
+                        return token.generateAndSave(account, appid);
                 } else {
 
                         // 登录失败
@@ -88,17 +102,29 @@ public class LoginController {
                                         paramType = "query", //
                                         required = true, //
                                         allowMultiple = false//
+                        ), //
+                        @ApiImplicitParam(//
+                                        name = "Authorization", //
+                                        value = "appid:appsecret", //
+                                        dataType = "String", //
+                                        paramType = "header", //
+                                        required = true, //
+                                        allowMultiple = false//
                         )})
         @PostMapping("phoneNum")
         public String loginByPhoneNum(//
-                        @RequestParam("phoNum") String phoNum//
+                        @RequestParam("phoNum") String phoNum, //
+                        HttpServletRequest request//
         ) throws LoginException {
+
+                // 提取appid
+                String appid = (String) request.getAttribute("appid");
 
                 // 根据手机号获取用户名
                 String account = accountData.getAccountByPhoNum(phoNum);
                 // 根据用户名生成token
                 Token token = new Token();
-                return token.generateAndSave(account);
+                return token.generateAndSave(account, appid);
 
         }
 

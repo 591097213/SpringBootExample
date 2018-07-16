@@ -27,16 +27,26 @@ public class CodeController {
                         value = "发送图片证码", //
                         notes = "向指定手机发送图片验证码"//
         )
-        @ApiImplicitParam(//
-                        name = "phoneNumber", //
-                        value = "手机号", //
-                        dataType = "String", //
-                        paramType = "query", //
-                        required = true, //
-                        allowMultiple = false//
-        )
+        @ApiImplicitParams({//
+                        @ApiImplicitParam(//
+                                        name = "phoneNumber", //
+                                        value = "手机号", //
+                                        dataType = "String", //
+                                        paramType = "query", //
+                                        required = true, //
+                                        allowMultiple = false//
+                        ), //
+                        @ApiImplicitParam(//
+                                        name = "Authorization", //
+                                        value = "appid:appsecret", //
+                                        dataType = "String", //
+                                        paramType = "header", //
+                                        required = true, //
+                                        allowMultiple = false//
+                        )})
         @GetMapping(value = "/image")
         public String sendImageCode(@RequestParam("phoneNumber") String phoneNum) {
+
 
                 // 生成图片验证码
                 GenerateCode generateCode = new GenerateCode();
@@ -64,6 +74,14 @@ public class CodeController {
                                         value = "图片验证码", //
                                         dataType = "String", //
                                         paramType = "query", //
+                                        required = true, //
+                                        allowMultiple = false//
+                        ), //
+                        @ApiImplicitParam(//
+                                        name = "Authorization", //
+                                        value = "appid:appsecret", //
+                                        dataType = "String", //
+                                        paramType = "header", //
                                         required = true, //
                                         allowMultiple = false//
                         )})

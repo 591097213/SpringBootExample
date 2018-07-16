@@ -1,5 +1,6 @@
 package com.ccj.homework.homeworktest2.other.conf.handlerinterceptoradapterconf;
 
+import com.ccj.homework.homeworktest2.handlerinterceptoradapter.AuthorizationInterceptorAdapter;
 import com.ccj.homework.homeworktest2.handlerinterceptoradapter.ImageHandlerInterceptorAdapter;
 import com.ccj.homework.homeworktest2.handlerinterceptoradapter.ResourcesHandlerInterceptorAdapter;
 import com.ccj.homework.homeworktest2.handlerinterceptoradapter.SmsHandlerInterceptorAdapter;
@@ -23,6 +24,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
         @Autowired
         ResourcesHandlerInterceptorAdapter resourcesHandlerInterceptorAdapter;
 
+        @Autowired
+        AuthorizationInterceptorAdapter authorizationInterceptorAdapter;
+
         // 添加拦截器链并为每个拦截器配置拦截路径
         @Override
         public void addInterceptors(InterceptorRegistry registry) {
@@ -34,5 +38,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
                                 .addPathPatterns("/code/sms", "/pwd/alter");
                 registry.addInterceptor(this.resourcesHandlerInterceptorAdapter)
                                 .addPathPatterns("/other", "/pwd/alter");
+                registry.addInterceptor(this.authorizationInterceptorAdapter)
+                                .addPathPatterns("/authorization/**", "/code/**");
+
         }
 }

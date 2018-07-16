@@ -10,13 +10,15 @@ public class Token {
     /**
      * 生成并存储Token然后返回该token
      */
-    public String generateAndSave(String name) {
+    public String generateAndSave(String name, String appid) {
 
         // 生成token
         StringBuffer bftoken = new StringBuffer(name);
         // 以冒号分隔用户名和时间戳
         bftoken.append(":");
         bftoken.append(System.currentTimeMillis());
+        bftoken.append(":");
+        bftoken.append(appid);
         String token = bftoken.toString();
 
         // 记录token
