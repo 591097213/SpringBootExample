@@ -15,3 +15,15 @@ authorization:
     appidAndAppsecret:
         app1: 123456
         app2: 654321
+interceptor-pathpatterns:
+    AuthorizationInterceptorAdapter:
+        - /authorization/**
+        - /code/**
+    ImageHandlerInterceptorAdapter:
+        - /code/sms
+        - /pwd/alter
+    ResourcesHandlerInterceptorAdapter:
+        - /other
+        - /pwd/alter
+    SmsHandlerInterceptorAdapter:
+        - /authorization/phoneNum

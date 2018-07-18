@@ -32,14 +32,14 @@ public class InterceptorConfig implements WebMvcConfigurer {
         public void addInterceptors(InterceptorRegistry registry) {
                 // addPathPatterns 用于添加拦截规则
                 // excludePathPatterns 用于排除拦截
+                registry.addInterceptor(this.authorizationInterceptorAdapter)
+                                .addPathPatterns("/authorization/**", "/code/**");
                 registry.addInterceptor(this.smsHandlerInterceptorAdapter)
                                 .addPathPatterns("/authorization/phoneNum");
                 registry.addInterceptor(this.imageHandlerInterceptorAdapter)
                                 .addPathPatterns("/code/sms", "/pwd/alter");
                 registry.addInterceptor(this.resourcesHandlerInterceptorAdapter)
                                 .addPathPatterns("/other", "/pwd/alter");
-                registry.addInterceptor(this.authorizationInterceptorAdapter)
-                                .addPathPatterns("/authorization/**", "/code/**");
 
         }
 }
