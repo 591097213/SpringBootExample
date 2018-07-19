@@ -1,7 +1,8 @@
 package com.ccj.homework.homeworktest2.control.resources;
 
 import javax.servlet.http.HttpServletRequest;
-import com.ccj.homework.homeworktest2.other.staticdata.AccountData;
+import com.ccj.homework.homeworktest2.dao.UserRepository;
+import com.ccj.homework.homeworktest2.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +18,10 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/pwd")
 public class PwdController {
 
+        // @Autowired
+        // AccountData accountdata;
         @Autowired
-        AccountData accountdata;
+        UserRepository userRepository;
 
         @ApiOperation(value = "修改密码", notes = "修改密码")
         @ApiImplicitParams({ //
@@ -61,9 +64,12 @@ public class PwdController {
                 // 从request中取出ResourcesHandlerInterceptorAdapter放入的用户名
                 String account = (String) request.getAttribute("account");
                 // 验证旧密码是否正确
-                if (accountdata.getPwdByAccount(account).equals(oldPwd)) {
+                if (userRepository.findByAccount(account).getPwd().equals(oldPwd)) {
                         // 修改密码
-                        return accountdata.resetPwdByAccount(account, newPwd);
+                        User user = userRepository.findByAccount(account);
+                        user.setPwd(newPwd);
+                        userRepository.save(user);
+                        return true;
                 } else {
                         return false;
                 }

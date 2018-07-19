@@ -3,7 +3,7 @@ package com.ccj.homework.homeworktest2.control.authorization;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.ccj.homework.homeworktest2.other.staticdata.AccountData;
+import com.ccj.homework.homeworktest2.dao.UserRepository;
 import com.ccj.homework.homeworktest2.service.tool.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +24,12 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/authorization")
 public class LoginController {
 
-        // 读取账户和密码
+        // 注入
         @Autowired
-        AccountData accountData;
+        UserRepository userRepository;
+
+        @Autowired
+        Token token;
 
         /**
          * 账号密码登录
@@ -65,13 +68,12 @@ public class LoginController {
                         HttpServletResponse response//
         ) throws LoginException {
                 // 验证密码是否正确
-                if (pwd.equals(accountData.getPwdByAccount(account))) {
+                if (pwd.equals(userRepository.findByAccount(account).getPwd())) {
 
                         // 提取appid
                         String appid = (String) request.getAttribute("appid");
 
                         // 生成并保存token
-                        Token token = new Token();
                         return token.generateAndSave(account, appid);
                 } else {
 
@@ -121,9 +123,8 @@ public class LoginController {
                 String appid = (String) request.getAttribute("appid");
 
                 // 根据手机号获取用户名
-                String account = accountData.getAccountByPhoNum(phoNum);
+                String account = userRepository.findByPhoneNum(phoNum).getAccount();
                 // 根据用户名生成token
-                Token token = new Token();
                 return token.generateAndSave(account, appid);
 
         }

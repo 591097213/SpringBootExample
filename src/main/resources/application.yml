@@ -1,20 +1,12 @@
-login:
-    accountAndPwd:
-        #account:pwd
-        #token中以':'分隔用户名和时间戳，故这里用户名中不能出现':'
-        root: root
-        admin: 123456
-    phoNumAndAccount:
-        #phoNum:Pwd
-        "18350193122": root
-        "12345678910": admin
-    accountAndPhoNum:
-        root: "18350193122"
-        admin: "12345678910"
-authorization:
-    appidAndAppsecret:
-        app1: 123456
-        app2: 654321
+spring:
+    datasource:
+        url: jdbc:mysql://yucoang.top:3306/user_authorization
+        username: ccj
+        password: 123456
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
 interceptor-pathpatterns:
     AuthorizationInterceptorAdapter:
         - /authorization/**
@@ -27,14 +19,3 @@ interceptor-pathpatterns:
         - /pwd/alter
     SmsHandlerInterceptorAdapter:
         - /authorization/phoneNum
-
-spring:
-    datasource:
-        url: jdbc:mysql://0.0.0.0:3307/db_authorization
-        username: root
-        password: 123456
-
-    jpa:
-        hibernate:
-            ddl-auto: update
-        show-sql: true

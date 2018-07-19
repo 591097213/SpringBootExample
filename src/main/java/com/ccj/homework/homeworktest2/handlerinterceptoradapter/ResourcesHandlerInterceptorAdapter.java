@@ -2,8 +2,9 @@ package com.ccj.homework.homeworktest2.handlerinterceptoradapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.ccj.homework.homeworktest2.dao.data.TokenData;
+import com.ccj.homework.homeworktest2.dao.data.TokenTool;
 import com.ccj.homework.homeworktest2.service.tool.Token;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -14,6 +15,12 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 @Component
 public class ResourcesHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
+    @Autowired
+    Token toolToken;
+
+    @Autowired
+    TokenTool tokenTool;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object object) throws Exception {
@@ -21,12 +28,11 @@ public class ResourcesHandlerInterceptorAdapter extends HandlerInterceptorAdapte
         String token = request.getParameter("token");
 
         // 从token中提取用户名，供修改密码接口使用
-        Token toolToken = new Token();
         String account = toolToken.getAccountByToken(token);
         request.setAttribute("account", account);
 
         // 验证token是否有效
-        if (TokenData.findUserToken(token) == true) {
+        if (tokenTool.findUserToken(token) == true) {
             return true;
         } else {
             // 校验失败

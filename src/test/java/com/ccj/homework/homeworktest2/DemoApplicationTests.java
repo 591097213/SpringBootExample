@@ -1,7 +1,9 @@
 package com.ccj.homework.homeworktest2;
 
-import java.util.Map;
-import com.ccj.homework.homeworktest2.other.staticdata.AccountData;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import com.ccj.homework.homeworktest2.dao.UserRepository;
+import com.ccj.homework.homeworktest2.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,37 +15,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class DemoApplicationTests {
 
     @Autowired
-    AccountData accountData;
+    UserRepository userRepository;
 
     @Test
     public void contextLoads() {
-        Map<String, String> phoNumAndAccount = accountData.getPhoNumAndAccount();
 
-        System.out.println("************************************");
-        System.out.println(phoNumAndAccount.get("18350193122"));
-        System.out.println(phoNumAndAccount.get("12345678910"));
 
-        System.out.println("************************************");
-        System.out.println(accountData.getAccountByPhoNum("18350193122"));
-        System.out.println(accountData.getAccountByPhoNum("12345678910"));
+        User user;
 
-        System.out.println("************************************");
-        System.out.println(accountData.getPhoNumByAccount("root"));
-    }
+        // findById
+        user = userRepository.findById(Long.valueOf(1)).orElse(null);
 
-    @Test
-    public void spilt() {
-        String a[] = "a:b;c:d".split(":");
-        System.out.println(a[0]);
-        for (String b : a) {
-            System.out.println(b);
-        }
-    }
+        // findByPhoneNum
+        user = userRepository.findByPhoneNum("18350193122");
 
-    @Test
-    public void accountDataTest() {
-        System.out.println(accountData.getPhoNumByAccount("root"));
-        System.out.println(accountData.getPhoNumByAccount("admin"));
     }
 
 }

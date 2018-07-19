@@ -2,13 +2,17 @@ package com.ccj.homework.homeworktest2.handlerinterceptoradapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.ccj.homework.homeworktest2.dao.data.SmsCodeAndPhoNumData;
+import com.ccj.homework.homeworktest2.dao.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 @Component
 public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
+
+    @Autowired
+    UserRepository userRepository;
 
     /**
      * 短信验证码拦截器
@@ -22,7 +26,7 @@ public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
         String smsCode = request.getParameter("smsCode");
 
         // 校验参数
-        if (SmsCodeAndPhoNumData.getSmsCodeByPhoNum(phoNum).equals(smsCode)) {
+        if (userRepository.findByPhoneNum(phoNum).getSmsCode().equals(smsCode)) {
             return true;
         } else {
 

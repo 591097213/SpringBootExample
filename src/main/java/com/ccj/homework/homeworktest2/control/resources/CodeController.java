@@ -2,6 +2,7 @@ package com.ccj.homework.homeworktest2.control.resources;
 
 import javax.servlet.http.HttpServletResponse;
 import com.ccj.homework.homeworktest2.service.tool.GenerateCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,9 @@ import io.swagger.annotations.ApiOperation;;
 @RestController
 @RequestMapping("/code")
 public class CodeController {
+
+        @Autowired
+        GenerateCode generateCode;
 
         /**
          * 获取图片验证码
@@ -49,7 +53,6 @@ public class CodeController {
 
 
                 // 生成图片验证码
-                GenerateCode generateCode = new GenerateCode();
                 String format = generateCode.generateAndSaveImageCode(phoneNum);
 
                 return format;
@@ -92,7 +95,6 @@ public class CodeController {
         ) {
 
                 // 生成短信验证码
-                GenerateCode generateCode = new GenerateCode();
                 String format = generateCode.generateAndSaveSmsCode(phoNum);
                 // 输出短信验证码并返回true
                 System.out.println(format);
