@@ -1,14 +1,11 @@
 package com.ccj.homework.homeworktest2.other.staticdata;
 
-import java.util.List;
 import com.ccj.homework.homeworktest2.dao.AppRepository;
-import com.ccj.homework.homeworktest2.entity.App;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
-// @Component
-// @ConfigurationProperties(prefix = "authorization")
+
 @Component
 public class Authorization {
 
@@ -16,26 +13,7 @@ public class Authorization {
     @Autowired
     AppRepository appRepository;
 
-    // /**
-    // * @return the appidAndAppsecret
-    // */
-    // public Map<String, String> getAppidAndAppsecret() {
-    // return appidAndAppsecret;
-    // }
 
-    // /**
-    // * @param appidAndAppsecret the appidAndAppsecret to set
-    // */
-    // public void setAppidAndAppsecret(Map<String, String> appidAndAppsecret) {
-    // this.appidAndAppsecret = appidAndAppsecret;
-    // }
-
-    // /**
-    // * 通过appid查询appsecret
-    // */
-    // public String getAppsecretByAppid(String appid) {
-    // return appidAndAppsecret.get(appid);
-    // }
 
     /**
      * 在authorization中获取appid和appsecret

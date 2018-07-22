@@ -1,9 +1,8 @@
 package com.ccj.homework.homeworktest2;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import com.ccj.homework.homeworktest2.dao.UserRepository;
 import com.ccj.homework.homeworktest2.entity.User;
+import com.ccj.homework.homeworktest2.service.tool.RandomUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +19,19 @@ public class DemoApplicationTests {
     @Test
     public void contextLoads() {
 
-
         User user;
-
         // findById
         user = userRepository.findById(Long.valueOf(1)).orElse(null);
-
         // findByPhoneNum
         user = userRepository.findByPhoneNum("18350193122");
 
+    }
+
+    @Test
+    public void randomUtilsTest() {
+        RandomUtils randomUtils;
+
+        // System.out.println(randomUtils.get);
     }
 
 }
