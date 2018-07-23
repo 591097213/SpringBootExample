@@ -1,9 +1,13 @@
 package com.ccj.homework.homeworktest2.handlerinterceptoradapter;
 
+import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.ccj.homework.homeworktest2.dao.data.TokenTool;
-import com.ccj.homework.homeworktest2.service.tool.Token;
+import com.ccj.homework.homeworktest2.dao.TokenRepository;
+import com.ccj.homework.homeworktest2.entity.Account;
+import com.ccj.homework.homeworktest2.entity.App;
+import com.ccj.homework.homeworktest2.entity.Token;
+import com.ccj.homework.homeworktest2.service.handlerinterceptorservice.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -16,10 +20,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class ResourcesHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
     @Autowired
-    Token toolToken;
+    ResourceService resourceService;
 
     @Autowired
-    TokenTool tokenTool;
+    TokenRepository tokenRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -27,12 +31,17 @@ public class ResourcesHandlerInterceptorAdapter extends HandlerInterceptorAdapte
         // 从参数中提取token
         String token = request.getParameter("token");
 
+
+        Account account = new Account();
+        App app = new App();
+        String[] data = resourceService.getData(token, account, app);
+
         // 从token中提取用户名，供修改密码接口使用
-        String account = toolToken.getAccountByToken(token);
         request.setAttribute("account", account);
 
+        Token judge = tokenRepository.findByAccountAndCurrentTime(account, data[1]);
         // 验证token是否有效
-        if (tokenTool.findUserToken(token) == true) {
+        if (judge != null) {
             return true;
         } else {
             // 校验失败

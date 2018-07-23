@@ -16,35 +16,35 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class InterceptorConfig implements WebMvcConfigurer {
 
-        @Autowired
-        ImageHandlerInterceptorAdapter imageHandlerInterceptorAdapter;
+    @Autowired
+    ImageHandlerInterceptorAdapter imageHandlerInterceptorAdapter;
 
-        @Autowired
-        SmsHandlerInterceptorAdapter smsHandlerInterceptorAdapter;
+    @Autowired
+    SmsHandlerInterceptorAdapter smsHandlerInterceptorAdapter;
 
-        @Autowired
-        ResourcesHandlerInterceptorAdapter resourcesHandlerInterceptorAdapter;
+    @Autowired
+    ResourcesHandlerInterceptorAdapter resourcesHandlerInterceptorAdapter;
 
-        @Autowired
-        AuthorizationInterceptorAdapter authorizationInterceptorAdapter;
+    @Autowired
+    AuthorizationInterceptorAdapter authorizationInterceptorAdapter;
 
-        // 注入YML文件中配置的URL
-        @Autowired
-        InterceptorPathpatterns interceptorPathpatterns;
+    // 注入YML文件中配置的URL
+    @Autowired
+    InterceptorPathpatterns interceptorPathpatterns;
 
-        // 添加拦截器链并为每个拦截器配置拦截路径
-        @Override
-        public void addInterceptors(InterceptorRegistry registry) {
-                // addPathPatterns 用于添加拦截规则
-                // excludePathPatterns 用于排除拦截
-                registry.addInterceptor(this.authorizationInterceptorAdapter).addPathPatterns(
-                                interceptorPathpatterns.getAuthorizationInterceptorAdapter());
-                registry.addInterceptor(this.smsHandlerInterceptorAdapter).addPathPatterns(
-                                interceptorPathpatterns.getSmsHandlerInterceptorAdapter());
-                registry.addInterceptor(this.imageHandlerInterceptorAdapter).addPathPatterns(
-                                interceptorPathpatterns.getImageHandlerInterceptorAdapter());
-                registry.addInterceptor(this.resourcesHandlerInterceptorAdapter).addPathPatterns(
-                                interceptorPathpatterns.getResourcesHandlerInterceptorAdapter());
+    // 添加拦截器链并为每个拦截器配置拦截路径
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // addPathPatterns 用于添加拦截规则
+        // excludePathPatterns 用于排除拦截
+        registry.addInterceptor(this.authorizationInterceptorAdapter)
+                .addPathPatterns(interceptorPathpatterns.getAuthorizationInterceptorAdapter());
+        registry.addInterceptor(this.smsHandlerInterceptorAdapter)
+                .addPathPatterns(interceptorPathpatterns.getSmsHandlerInterceptorAdapter());
+        registry.addInterceptor(this.imageHandlerInterceptorAdapter)
+                .addPathPatterns(interceptorPathpatterns.getImageHandlerInterceptorAdapter());
+        registry.addInterceptor(this.resourcesHandlerInterceptorAdapter)
+                .addPathPatterns(interceptorPathpatterns.getResourcesHandlerInterceptorAdapter());
 
-        }
+    }
 }

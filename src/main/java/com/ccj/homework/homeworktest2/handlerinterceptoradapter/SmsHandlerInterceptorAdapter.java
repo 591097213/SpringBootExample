@@ -1,8 +1,13 @@
 package com.ccj.homework.homeworktest2.handlerinterceptoradapter;
 
+import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.ccj.homework.homeworktest2.dao.PhoNumRepository;
+import com.ccj.homework.homeworktest2.dao.SmsCodeRepository;
 import com.ccj.homework.homeworktest2.dao.UserRepository;
+import com.ccj.homework.homeworktest2.entity.PhoNum;
+import com.ccj.homework.homeworktest2.entity.SmsCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -13,6 +18,12 @@ public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    PhoNumRepository phoNumRepository;
+
+    @Autowired
+    SmsCodeRepository smsCodeRepository;
 
     /**
      * 短信验证码拦截器
@@ -25,8 +36,13 @@ public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
         String phoNum = request.getParameter("phoNum");
         String smsCode = request.getParameter("smsCode");
 
+        PhoNum pho = phoNumRepository.findByNum(phoNum);
+
+
+        SmsCode judge = smsCodeRepository.findByPhoNumAndCode(pho, smsCode);
+
         // 校验参数
-        if (userRepository.findByPhoneNum(phoNum).getSmsCode().equals(smsCode)) {
+        if (judge != null) {
             return true;
         } else {
 

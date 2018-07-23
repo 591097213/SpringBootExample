@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api("资源路径模块")
 @RestController
-public class otherPathController {
+public class OtherPathController {
 
         @ApiOperation(//
                         value = "资源路径", //

@@ -55,7 +55,6 @@ cacheable -->
 | id        | Long   |
 | appid     | String |
 | appsecret | String |
-| appname   | String |
 
 * sms_code
 

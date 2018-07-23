@@ -1,6 +1,4 @@
-package com.ccj.homework.homeworktest2.service.tool;
-
-
+package com.ccj.homework.homeworktest2.service.initservice;
 
 import org.springframework.stereotype.Component;
 import java.awt.*;
@@ -9,10 +7,16 @@ import java.util.Random;
 @Component
 public class RandomUtils {
 
+    /**
+     * 自定义字符创的类型
+     */
     public enum CharType {
-        Number, LowerCase, UpperCase;
+    Number, LowerCase, UpperCase;
     }
 
+    /**
+     * 数据
+     */
     private static final String num = "0123456789";
     private static final String lowercase = "abcdefghijklmnopqrstuvwxyz";
     private static final String uppercase = "ABCDEFGHIJKLMNOPQISTUVWXYZ";
@@ -32,7 +36,6 @@ public class RandomUtils {
     private static String[] telFirst =
             "134,135,136,137,138,139,150,151,152,157,158,159,130,131,132,155,156,133,153"
                     .split(",");
-
 
     /**
      * 获取一个区间内的随机数,例个体RandomNumber(0,100),获取[0,100]内的随机数,包含0与100,共101种可能.
@@ -63,34 +66,49 @@ public class RandomUtils {
         return getChineseName(getSex());
     }
 
+    /**
+     * true表示男,false表示女
+     */
     public static String getChineseName(Boolean sex) {
+
+        // 获取一个firstName.length范围内的随机数
         int index = getRandomNumber(0, firstName.length() - 1);
+        // 获取随机姓氏
         String first = firstName.substring(index, index + 1);
+
+        // 指定男名或女名
         String str = sex ? boy : girl;
+        // 获取boy/girl.length范围内的随机数
         int length = str.length();
+        // 获取随机名字第二个字
         index = getRandomNumber(0, length - 1);
         String second = str.substring(index, index + 1);
+
+        // 随机判断是否有第三个字
         int hasThird = getRandomNumber(0, 1);
         String third = "";
         if (hasThird == 1) {
             index = getRandomNumber(0, length - 1);
             third = str.substring(index, index + 1);
         }
+        // 将三个字组合起来
         return first + second + third;
     }
 
     /**
-     * 获取一个字符串
+     * 获取一个随机字符串
      *
      * @param size 字符串长度
-     * @param type 字符串类型
+     * @param type 字符串中字符的类型可为CharType.Number, CharType.LowerCase, CharType.UpperCase
      * @return
      */
     public static String getStr(int size, CharType... type) {
         StringBuffer base = new StringBuffer();
+        // 默认为小写
         if (type == null || type.length == 0) {
             base.append(lowercase);
         } else {
+            // 根据type的类型创建base
             for (CharType str_type : type) {
                 if (str_type.equals(CharType.LowerCase)) {
                     base.append(lowercase);
@@ -111,7 +129,9 @@ public class RandomUtils {
         return result.toString();
     }
 
-
+    /**
+     * 创建随机数字字符串
+     */
     public static String getNum(int size) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < size; i++) {
@@ -137,7 +157,6 @@ public class RandomUtils {
         return sb.toString();
     }
 
-
     /**
      * 获取一个手机号
      *
@@ -151,7 +170,6 @@ public class RandomUtils {
         return first + second + thrid;
     }
 
-
     /**
      * 随机取色
      */
@@ -159,6 +177,17 @@ public class RandomUtils {
         Random ran = new Random();
         Color color = new Color(ran.nextInt(256), ran.nextInt(256), ran.nextInt(256));
         return color;
+    }
+
+    /**
+     * 生成一个随机的街道
+     */
+    public static String getRoad() {
+        int index = getRandomNumber(0, street.length - 1);
+        String first = street[index];
+        String second = String.valueOf(getRandomNumber(11, 150)) + "号";
+        String third = "-" + getRandomNumber(1, 20) + "-" + getRandomNumber(1, 10);
+        return first + second + third;
     }
 
 }

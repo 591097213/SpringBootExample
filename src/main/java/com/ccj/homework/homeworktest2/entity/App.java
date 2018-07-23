@@ -1,59 +1,41 @@
 package com.ccj.homework.homeworktest2.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import lombok.Data;
 
 @Entity
+@Data
 public class App {
 
     @Id
-    @GeneratedValue
-    private Long id;
-
+    // appId用自定义的UUID实现，不自增
     private String appId;
-    private String appsecret;
 
-    /**
-     * @return Long return the id
-     */
-    public Long getId() {
-        return id;
-    }
+    private String appSecret;
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @OneToMany(mappedBy = "app"/* , fetch = FetchType.EAGER */)
+    private Collection<ImgCode> imgCodes;
 
-    /**
-     * @return String return the appId
-     */
-    public String getAppId() {
-        return appId;
-    }
+    @ManyToMany(mappedBy = "apps")
+    private Collection<User> users;
 
-    /**
-     * @param appId the appId to set
-     */
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
+    @OneToMany(mappedBy = "app"/* , fetch = FetchType.EAGER */)
+    private Collection<Token> tokens;
 
-    /**
-     * @return String return the appsecret
-     */
-    public String getAppsecret() {
-        return appsecret;
-    }
+    @OneToMany(mappedBy = "app"/* , fetch = FetchType.EAGER */)
+    private Collection<SmsCode> smsCodes;
 
-    /**
-     * @param appsecret the appsecret to set
-     */
-    public void setAppsecret(String appsecret) {
-        this.appsecret = appsecret;
+    public App() {
+        this.imgCodes = new ArrayList<ImgCode>();
+        this.users = new ArrayList<User>();
+        this.tokens = new ArrayList<Token>();
+        this.smsCodes = new ArrayList<SmsCode>();
     }
 
 }

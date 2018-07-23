@@ -3,8 +3,14 @@ package com.ccj.homework.homeworktest2.control.authorization;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.ccj.homework.homeworktest2.dao.AccountRepository;
+import com.ccj.homework.homeworktest2.dao.AppRepository;
+import com.ccj.homework.homeworktest2.dao.PhoNumRepository;
 import com.ccj.homework.homeworktest2.dao.UserRepository;
-import com.ccj.homework.homeworktest2.service.tool.Token;
+import com.ccj.homework.homeworktest2.entity.Account;
+import com.ccj.homework.homeworktest2.entity.App;
+import com.ccj.homework.homeworktest2.entity.PhoNum;
+import com.ccj.homework.homeworktest2.service.controllerservice.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,10 +32,19 @@ public class LoginController {
 
         // 注入
         @Autowired
+        AccountRepository accountRepository;
+
+        @Autowired
+        TokenGenerator tokenGenerator;
+
+        @Autowired
+        AppRepository appRepository;
+
+        @Autowired
         UserRepository userRepository;
 
         @Autowired
-        Token token;
+        PhoNumRepository phoNumRepository;
 
         /**
          * 账号密码登录
@@ -62,19 +77,22 @@ public class LoginController {
                         )})
         @PostMapping("/accountAndPwd")
         public String loginByAccountAndPwd(//
-                        @RequestParam("account") String account, //
+                        @RequestParam("account") long accountId, //
                         @RequestParam("pwd") String pwd, //
                         HttpServletRequest request, //
                         HttpServletResponse response//
         ) throws LoginException {
-                // 验证密码是否正确
-                if (pwd.equals(userRepository.findByAccount(account).getPwd())) {
 
-                        // 提取appid
-                        String appid = (String) request.getAttribute("appid");
+                Account account = accountRepository.findById(accountId).get();
+
+                // 验证密码是否正确
+                if (pwd.equals(account.getPwd())) {
+
+                        // 提取app
+                        App app = (App) request.getAttribute("app");
 
                         // 生成并保存token
-                        return token.generateAndSave(account, appid);
+                        return tokenGenerator.generateAndSave(account, app);
                 } else {
 
                         // 登录失败
@@ -119,13 +137,16 @@ public class LoginController {
                         HttpServletRequest request//
         ) throws LoginException {
 
-                // 提取appid
-                String appid = (String) request.getAttribute("appid");
+                // 提取app
+                App app = (App) request.getAttribute("app");
 
-                // 根据手机号获取用户名
-                String account = userRepository.findByPhoneNum(phoNum).getAccount();
+                // 获取手机号对象
+                PhoNum pho = phoNumRepository.findByNum(phoNum);
+
+                // 根据手机号对象获取账户
+                Account account = accountRepository.findByPhoNum(pho);
                 // 根据用户名生成token
-                return token.generateAndSave(account, appid);
+                return tokenGenerator.generateAndSave(account, app);
 
         }
 

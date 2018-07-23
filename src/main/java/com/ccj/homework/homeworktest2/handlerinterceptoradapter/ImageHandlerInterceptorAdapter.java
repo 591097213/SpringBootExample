@@ -2,8 +2,8 @@ package com.ccj.homework.homeworktest2.handlerinterceptoradapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.ccj.homework.homeworktest2.dao.UserRepository;
-import com.ccj.homework.homeworktest2.service.tool.Token;
+import com.ccj.homework.homeworktest2.dao.ImgCodeRepository;
+import com.ccj.homework.homeworktest2.entity.ImgCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -18,27 +18,20 @@ public class ImageHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
     // @Autowired
     // public AccountData accountData;
     @Autowired
-    UserRepository userRepository;
+    ImgCodeRepository imgCodeRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object object) throws Exception {
 
-        // 查找phoNum参数
-        String phoNum = request.getParameter("phoNum");
-        // 若未找到，则查找token参数
-        if (phoNum == null) {
-            String token = request.getParameter("token");
-            Token toolToken = new Token();
-            // 由token得出用户名
-            String account = toolToken.getAccountByToken(token);
-            // 由用户名查找手机号
-            String temp = userRepository.findByAccount(account).getPhoneNum();
-            phoNum = temp;
-        }
-        String imgCode = request.getParameter("imgCode");
+        // 查找uuid参数
+        String uuid = request.getParameter("uuid");
+
+        ImgCode imgCode = imgCodeRepository.findByUuid(uuid);
+        String code = request.getParameter("imgCode");
+        Long time = System.currentTimeMillis();
         // 校验图片验证码
-        if (userRepository.findByPhoneNum(phoNum).getImageCOde().equals(imgCode)) {
+        if (imgCode.getCode().equals(code) && imgCode.getEndTime() > time) {
             return true;
         } else {
             // 校验失败

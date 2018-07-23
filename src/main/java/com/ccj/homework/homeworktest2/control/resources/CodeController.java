@@ -1,7 +1,13 @@
 package com.ccj.homework.homeworktest2.control.resources;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.ccj.homework.homeworktest2.service.tool.GenerateCode;
+import com.ccj.homework.homeworktest2.dao.AppRepository;
+import com.ccj.homework.homeworktest2.dao.PhoNumRepository;
+import com.ccj.homework.homeworktest2.entity.App;
+import com.ccj.homework.homeworktest2.entity.PhoNum;
+import com.ccj.homework.homeworktest2.entity.User;
+import com.ccj.homework.homeworktest2.service.controllerservice.GenerateCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,17 +30,23 @@ public class CodeController {
         @Autowired
         GenerateCode generateCode;
 
+        @Autowired
+        AppRepository appRepository;
+
+        @Autowired
+        PhoNumRepository phoNumRepository;
+
         /**
          * 获取图片验证码
          */
         @ApiOperation(//
                         value = "发送图片证码", //
-                        notes = "向指定手机发送图片验证码"//
+                        notes = "根据浏览器给的UUID获取图片验证码"//
         )
         @ApiImplicitParams({//
                         @ApiImplicitParam(//
-                                        name = "phoneNumber", //
-                                        value = "手机号", //
+                                        name = "uuid", //
+                                        value = "浏览器生成的UUID", //
                                         dataType = "String", //
                                         paramType = "query", //
                                         required = true, //
@@ -49,11 +61,18 @@ public class CodeController {
                                         allowMultiple = false//
                         )})
         @GetMapping(value = "/image")
-        public String sendImageCode(@RequestParam("phoneNumber") String phoneNum) {
+        public String sendImageCode(//
+                        @RequestParam("uuid") String uuid, //
+                        HttpServletRequest request) {
+                System.out.println("******************************into imgcode");
 
+
+                // 查找请求imgCode的app
+                App app = (App) request.getAttribute("app");
 
                 // 生成图片验证码
-                String format = generateCode.generateAndSaveImageCode(phoneNum);
+                System.out.println("----------------------" + app.getAppId());
+                String format = generateCode.generateAndSaveImageCode(uuid, app);
 
                 return format;
         }
@@ -81,6 +100,14 @@ public class CodeController {
                                         allowMultiple = false//
                         ), //
                         @ApiImplicitParam(//
+                                        name = "uuid", //
+                                        value = "浏览器生成的UUID", //
+                                        dataType = "String", //
+                                        paramType = "query", //
+                                        required = true, //
+                                        allowMultiple = false//
+                        ), //
+                        @ApiImplicitParam(//
                                         name = "Authorization", //
                                         value = "appid:appsecret", //
                                         dataType = "String", //
@@ -91,11 +118,17 @@ public class CodeController {
         @PostMapping("/sms")
         public boolean sendSmsCode(//
                         @RequestParam("phoNum") String phoNum, //
-                        HttpServletResponse response//
-        ) {
+                        HttpServletResponse response, //
+                        HttpServletRequest request) {
+
+                // 查找请求imgCode的app
+                App app = (App) request.getAttribute("app");
+
+                PhoNum pho = phoNumRepository.findByNum(phoNum);
+                User user = pho.getUser();
 
                 // 生成短信验证码
-                String format = generateCode.generateAndSaveSmsCode(phoNum);
+                String format = generateCode.generateAndSaveSmsCode(user, app, pho);
                 // 输出短信验证码并返回true
                 System.out.println(format);
 
