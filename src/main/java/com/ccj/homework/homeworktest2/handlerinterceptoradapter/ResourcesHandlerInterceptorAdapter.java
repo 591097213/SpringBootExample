@@ -34,7 +34,6 @@ public class ResourcesHandlerInterceptorAdapter extends HandlerInterceptorAdapte
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object object) throws Exception {
-        System.out.println("**********************************************into");
 
         // 从参数中提取token
         String token = request.getParameter("token");
