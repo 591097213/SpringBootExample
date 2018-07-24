@@ -41,8 +41,7 @@ public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
 
         SmsCode judge = smsCodeRepository.findByAccountAndCode(account, smsCode);
 
-        System.out.println("*****************************" + pho.getNum());
-        System.out.println("******************************" + account.getAccountName());
+
 
         // 校验参数
         if (judge != null) {

@@ -1,28 +1,3 @@
-spring:
-    datasource:
-        url: jdbc:mysql://yucoang.top:3306/user_authorization
-        username: ccj
-        password: 123456
-    jpa:
-        hibernate:
-            ddl-auto: create
-        show-sql: true
-
-interceptor-pathpatterns:
-    AuthorizationInterceptorAdapter:
-        - /authorization/**
-        - /code/**
-    ImageHandlerInterceptorAdapter:
-        - /code/sms
-        - /pwd/alter
-    ResourcesHandlerInterceptorAdapter:
-        - /other
-        - /pwd/alter
-    SmsHandlerInterceptorAdapter:
-        - /authorization/phoneNum
-    TokenHandlerInterceptorAdapter:
-        - /token
-
 #1分钟
 tokenEndTime: 60000
 #2分钟

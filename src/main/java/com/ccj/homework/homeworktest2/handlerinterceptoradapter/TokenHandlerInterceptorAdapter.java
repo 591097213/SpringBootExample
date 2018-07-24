@@ -26,7 +26,6 @@ public class TokenHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object object) throws Exception {
 
-        System.out.println("*********************" /* + refreshTokenString */);
         String refreshTokenString = request.getParameter("refreshToken");
         String data[] = resourceService.getData(refreshTokenString);
         RefreshToken refreshToken = refreshTokenRepository.findByCode(data[1]);

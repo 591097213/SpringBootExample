@@ -45,7 +45,6 @@ public class InitRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        System.out.println("*************************" + this.initDB);
         if (this.initDB) {
             // 插入i个User
             for (int i = 0; i < 10; i++) {
