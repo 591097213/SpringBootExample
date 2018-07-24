@@ -7,6 +7,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByAccounts(String account);
 
-    User findByPhoNums(String phoNum);
-
 }

@@ -8,7 +8,6 @@ import com.ccj.homework.homeworktest2.dao.UserRepository;
 import com.ccj.homework.homeworktest2.entity.Account;
 import com.ccj.homework.homeworktest2.entity.App;
 import com.ccj.homework.homeworktest2.entity.Token;
-import com.ccj.homework.homeworktest2.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,10 +41,6 @@ public class TokenGenerator {
         Long endTime = time + 3600 * 1000;
 
 
-        // 由accout获取user
-        User user = account.getUser();
-
-
         // 创建返回给用户的字符串
         StringBuffer bftoken = new StringBuffer(account.getId().toString());
         // 以冒号分隔用户名和时间戳
@@ -60,23 +55,10 @@ public class TokenGenerator {
 
         // 记录token
         Token token = new Token();
-        token.setApp(app);
-        token.setCurrentTime(currentTime);
+        token.setCode(currentTime);
         token.setEndTime(endTime);
-        token.setUser(user);
+        token.setAccount(account);
         tokenRepository.save(token);
-
-        // 记录User
-        Collection<Token> userTokens = user.getTokens();
-        userTokens.add(token);
-        user.setTokens(userTokens);
-        userRepository.save(user);
-
-        // 记录app
-        Collection<Token> appTokens = app.getTokens();
-        appTokens.add(token);
-        app.setTokens(appTokens);
-        appRepository.save(app);
 
         // 记录account
         Collection<Token> accountTokens = account.getTokens();

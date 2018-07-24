@@ -1,16 +1,16 @@
 package com.ccj.homework.homeworktest2.service.controllerservice;
 
 import java.util.Collection;
+import com.ccj.homework.homeworktest2.dao.AccountRepository;
 import com.ccj.homework.homeworktest2.dao.AppRepository;
 import com.ccj.homework.homeworktest2.dao.ImgCodeRepository;
 import com.ccj.homework.homeworktest2.dao.PhoNumRepository;
 import com.ccj.homework.homeworktest2.dao.SmsCodeRepository;
 import com.ccj.homework.homeworktest2.dao.UserRepository;
+import com.ccj.homework.homeworktest2.entity.Account;
 import com.ccj.homework.homeworktest2.entity.App;
 import com.ccj.homework.homeworktest2.entity.ImgCode;
-import com.ccj.homework.homeworktest2.entity.PhoNum;
 import com.ccj.homework.homeworktest2.entity.SmsCode;
-import com.ccj.homework.homeworktest2.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +31,9 @@ public class GenerateCode {
 
     @Autowired
     PhoNumRepository phoNumRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     /**
      * 生成并存储图片验证码
@@ -54,7 +57,6 @@ public class GenerateCode {
 
         // 存储app
         Collection<ImgCode> imgCodes = app.getImgCodes();
-        System.out.println("******************************generate");
         imgCodes.add(imgCode);
         app.setImgCodes(imgCodes);
         appRepository.save(app);
@@ -68,7 +70,8 @@ public class GenerateCode {
     /**
      * 生成并存储短信验证码
      */
-    public String generateAndSaveSmsCode(User user, App app, PhoNum phoNum) {
+    public String generateAndSaveSmsCode(Account account, App app) {
+
         // 生成验证码
         int code = (int) (Math.random() * 10000);
         // 补充前导0
@@ -80,28 +83,14 @@ public class GenerateCode {
         Long time = System.currentTimeMillis();
         Long endTime = time + 3600 * 1000;
         smsCode.setEndTime(endTime);
-        smsCode.setApp(app);
-        smsCode.setUser(user);
+        smsCode.setAccount(account);
         smsCodeRepository.save(smsCode);
 
-        // 存储user表
-        Collection<SmsCode> userSmsCodes = user.getSmsCodes();
-        userSmsCodes.add(smsCode);
-        user.setSmsCodes(userSmsCodes);
-        userRepository.save(user);
-
-        // 存储app表
-        Collection<SmsCode> appSmsCodes = app.getSmsCodes();
-        appSmsCodes.add(smsCode);
-        app.setSmsCodes(appSmsCodes);
-        appRepository.save(app);
-
-        // 存储PhoNum表
-        Collection<SmsCode> phoNumSmsCodes = phoNum.getSmsCodes();
-        phoNumSmsCodes.add(smsCode);
-        phoNum.setSmsCodes(phoNumSmsCodes);
-        phoNumRepository.save(phoNum);
-
+        // 存储account表
+        Collection<SmsCode> smsCodes = account.getSmsCodes();
+        smsCodes.add(smsCode);
+        account.setSmsCodes(smsCodes);
+        accountRepository.save(account);
 
         // 设定输出格式
         String rawFormat = "{\"smscode\":\"%s\"}";

@@ -1,7 +1,6 @@
 package com.ccj.homework.homeworktest2.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -21,13 +20,7 @@ public class SmsCode {
     private String code;
     private Long endTime;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private App app;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private PhoNum phoNum;
+    @ManyToOne
+    private Account account;
 
 }

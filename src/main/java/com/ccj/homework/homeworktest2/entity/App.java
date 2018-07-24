@@ -1,7 +1,7 @@
 package com.ccj.homework.homeworktest2.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -19,23 +19,15 @@ public class App {
 
     private String appSecret;
 
-    @OneToMany(mappedBy = "app"/* , fetch = FetchType.EAGER */)
+    @OneToMany(mappedBy = "app", fetch = FetchType.EAGER)
     private Collection<ImgCode> imgCodes;
 
     @ManyToMany(mappedBy = "apps")
     private Collection<User> users;
 
-    @OneToMany(mappedBy = "app"/* , fetch = FetchType.EAGER */)
-    private Collection<Token> tokens;
-
-    @OneToMany(mappedBy = "app"/* , fetch = FetchType.EAGER */)
-    private Collection<SmsCode> smsCodes;
-
     public App() {
-        this.imgCodes = new ArrayList<ImgCode>();
-        this.users = new ArrayList<User>();
-        this.tokens = new ArrayList<Token>();
-        this.smsCodes = new ArrayList<SmsCode>();
+        this.imgCodes = new HashSet<ImgCode>();
+        this.users = new HashSet<User>();
     }
 
 }

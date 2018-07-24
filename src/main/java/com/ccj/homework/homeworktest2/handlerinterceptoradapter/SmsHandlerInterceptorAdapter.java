@@ -1,11 +1,11 @@
 package com.ccj.homework.homeworktest2.handlerinterceptoradapter;
 
-import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ccj.homework.homeworktest2.dao.PhoNumRepository;
 import com.ccj.homework.homeworktest2.dao.SmsCodeRepository;
 import com.ccj.homework.homeworktest2.dao.UserRepository;
+import com.ccj.homework.homeworktest2.entity.Account;
 import com.ccj.homework.homeworktest2.entity.PhoNum;
 import com.ccj.homework.homeworktest2.entity.SmsCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,12 @@ public class SmsHandlerInterceptorAdapter extends HandlerInterceptorAdapter {
         String smsCode = request.getParameter("smsCode");
 
         PhoNum pho = phoNumRepository.findByNum(phoNum);
+        Account account = pho.getAccount();
 
+        SmsCode judge = smsCodeRepository.findByAccountAndCode(account, smsCode);
 
-        SmsCode judge = smsCodeRepository.findByPhoNumAndCode(pho, smsCode);
+        System.out.println("*****************************" + pho.getNum());
+        System.out.println("******************************" + account.getAccountName());
 
         // 校验参数
         if (judge != null) {

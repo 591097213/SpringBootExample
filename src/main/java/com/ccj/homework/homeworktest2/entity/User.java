@@ -1,7 +1,7 @@
 package com.ccj.homework.homeworktest2.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,10 +23,7 @@ public class User {
     private String email;
     private short age;
 
-    @OneToMany(mappedBy = "user"/* , fetch = FetchType.EAGER */)
-    private Collection<PhoNum> phoNums;
-
-    @OneToMany(mappedBy = "user"/* , fetch = FetchType.EAGER */)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Collection<Account> accounts;
 
     @ManyToMany
@@ -35,19 +32,11 @@ public class User {
     @ManyToMany
     private Collection<App> apps;
 
-    @OneToMany(mappedBy = "user"/* , fetch = FetchType.EAGER */)
-    private Collection<Token> tokens;
-
-    @OneToMany(mappedBy = "user"/* , fetch = FetchType.EAGER */)
-    private Collection<SmsCode> smsCodes;
 
     public User() {
-        this.accounts = new ArrayList<Account>();
-        this.addresses = new ArrayList<Address>();
-        this.apps = new ArrayList<App>();
-        this.phoNums = new ArrayList<PhoNum>();
-        this.tokens = new ArrayList<Token>();
-        this.smsCodes = new ArrayList<SmsCode>();
+        this.accounts = new HashSet<Account>();
+        this.addresses = new HashSet<Address>();
+        this.apps = new HashSet<App>();
     }
 
 

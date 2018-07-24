@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface TokenRepository extends JpaRepository<Token, Long> {
 
-    public Token findByAccountAndCurrentTime(Account account, String currentTime);
+    public Token findByAccountAndCode(Account account, String currentTime);
 
 }

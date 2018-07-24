@@ -1,7 +1,7 @@
 package com.ccj.homework.homeworktest2.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -25,6 +25,6 @@ public class Address {
     private Collection<User> users;
 
     public Address() {
-        this.users = new ArrayList<User>();
+        this.users = new HashSet<User>();
     }
 }

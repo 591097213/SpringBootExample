@@ -22,7 +22,6 @@ public class AuthorizationInterceptorAdapter extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
             Object object) throws Exception {
-
         // Authorization=appId:appSecret
         String authorization = request.getHeader("Authorization");
         App app = authorizationTool.judgeAppidAndAppSecret(authorization);
