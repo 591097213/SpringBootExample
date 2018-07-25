@@ -117,7 +117,7 @@ public class TokenGenerator {
         token.setCode(currentTime);
         token.setEndTime(endTime);
         token.setAccount(account);
-        token.setApp(app);
+        // token.setApp(app);
         tokenRepository.save(token);
 
         return token;

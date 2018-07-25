@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Entity
@@ -22,6 +23,7 @@ public class App {
     @OneToMany(mappedBy = "app", fetch = FetchType.EAGER)
     private Collection<ImgCode> imgCodes;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "apps")
     private Collection<User> users;
 

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 /**
@@ -21,6 +22,7 @@ public class Address {
 
     private String addressName;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "addresses")
     private Collection<User> users;
 
