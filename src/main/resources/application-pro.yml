@@ -1,0 +1,6 @@
+#2小时
+tokenEndTime: 7200000
+#2个月
+refreshTokenEndTime: 5184000000
+
+initDB: false

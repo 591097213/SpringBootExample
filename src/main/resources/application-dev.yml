@@ -1,0 +1,6 @@
+#1分钟
+tokenEndTime: 60000
+#2分钟
+refreshTokenEndTime: 120000
+
+initDB: true
